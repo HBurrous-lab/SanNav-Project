@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SanNav | GTA V Interactive Map</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <img src="assets/sannav-logo.png" alt="SanNav logo" />
+        <div>
+          <h1>SanNav</h1>
+          <p>GTA V Interactive Map</p>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <input id="searchInput" type="text" placeholder="Search locations, stores, services..." />
+        <button id="clearSearch" title="Clear search">×</button>
+      </div>
+
+      <div class="route-box">
+        <button id="routeMode">Route Planner: Off</button>
+        <button id="clearRoute">Clear Route</button>
+      </div>
+
+      <section class="panel">
+        <h2>Map Layers</h2>
+        <label><input type="checkbox" id="roadsLayer" checked /> Roads</label>
+        <label><input type="checkbox" id="districtsLayer" checked /> District Labels</label>
+        <label><input type="checkbox" id="gridLayer" /> Coordinate Grid</label>
+      </section>
+
+      <section class="panel">
+        <h2>Categories</h2>
+        <div id="categoryList"></div>
+      </section>
+
+      <section class="panel results-panel">
+        <h2>Locations</h2>
+        <div id="results"></div>
+      </section>
+    </aside>
+
+    <main class="map-shell">
+      <header class="topbar">
+        <button class="hamburger" id="toggleSidebar">☰</button>
+        <div class="top-title">Los Santos / Blaine County</div>
+        <div class="coords" id="coords">X: 0 · Y: 0 · Zoom: 100%</div>
+      </header>
+
+      <div class="map-toolbar">
+        <button id="zoomIn">+</button>
+        <button id="zoomOut">−</button>
+        <button id="resetView">Reset</button>
+        <button id="fullscreenBtn">Fullscreen</button>
+      </div>
+
+      <div class="map-viewport" id="viewport">
+        <div class="map-canvas" id="mapCanvas">
+          <svg id="mapSvg" viewBox="0 0 1600 1600" aria-label="Interactive SanNav Map">
+            <defs>
+              <linearGradient id="water" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#07264b"/><stop offset="1" stop-color="#0b1225"/></linearGradient>
+              <linearGradient id="land" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#1f242b"/><stop offset="1" stop-color="#111318"/></linearGradient>
+              <filter id="glow"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+
+            <rect width="1600" height="1600" fill="url(#water)" />
+            <path class="land" d="M390,20 C560,85 690,35 850,85 C1050,150 1290,60 1510,180 C1580,245 1560,420 1600,530 L1600,1600 L160,1600 C140,1450 210,1270 155,1115 C95,950 155,760 110,610 C60,440 170,310 255,205 C300,150 320,70 390,20Z" />
+            <path class="sand" d="M365,25 C330,95 315,155 265,205 C175,292 75,435 120,590 C165,750 105,925 170,1100 C225,1265 155,1435 180,1600 L110,1600 C82,1420 140,1270 95,1120 C42,940 90,745 50,615 C10,465 100,305 205,185 C285,95 280,40 365,25Z" />
+
+            <g id="gridGroup" class="grid"></g>
+            <g id="districtGroup"></g>
+            <g id="roadsGroup"></g>
+            <polyline id="routeLine" class="route-line" points="" />
+            <g id="markerLayer"></g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="info-card" id="infoCard">
+        <button id="closeInfo">×</button>
+        <h3>Select a marker</h3>
+        <p>Use the sidebar filters or click anywhere on the map.</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
